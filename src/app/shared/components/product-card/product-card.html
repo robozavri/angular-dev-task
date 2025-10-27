@@ -1,0 +1,22 @@
+<z-card class="w-full max-w-sm" [zTitle]="product()?.name">
+      <div class="space-y-4"> 
+        <div class="space-y-2">
+          <div class="flex items-center">
+            <z-avatar zSize="lg" [zImage]="{ url: product()?.imageUrl, alt: product()?.name, fallback: '' }" />
+          </div>
+         
+        </div>
+        <div class="space-y-2">
+          <span class="text-lg font-bold">Price: ${{ product()?.price }}</span>
+        </div>
+        <div class="space-y-2">
+          Category: {{ product()?.category }}
+        </div>
+        <div class="space-y-2">
+          {{ product()?.description }}
+        </div>
+        <div class="space-y-2">
+          <z-button zType="outline" class="w-full">View details</z-button>
+        </div>
+      </div>
+    </z-card>

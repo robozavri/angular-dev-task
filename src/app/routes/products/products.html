@@ -1,0 +1,33 @@
+<div class="flex flex-col gap-6 text-center">
+
+
+  <z-layout class="rounded-lg overflow-hidden">
+    <!-- <z-header class="h-16 px-12 bg-[#4096ff] text-white border-0 justify-center">Header</z-header> -->
+    <z-layout>
+      <z-sidebar class=" text-white border-0" [zWidth]="120">Sidebar
+
+
+        
+
+
+      </z-sidebar>
+      <z-content class="min-h-[200px]  text-white">
+        <div class="flex flex-wrap gap-4">
+          <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+        </div>
+
+        <z-pagination [zPageIndex]="currentPage" [zTotal]="5" [(ngModel)]="currentPage" /> 
+
+
+      </z-content>
+    </z-layout>
+    <!-- <z-footer class="h-16 px-12 bg-[#4096ff] text-white border-0 justify-center">Footer</z-footer> -->
+  </z-layout>
+
+
+
+
+</div>
+
+<p>products works!</p>
+ 
