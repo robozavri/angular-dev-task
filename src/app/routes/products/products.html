@@ -1,33 +1,58 @@
-<div class="flex flex-col gap-6 text-center">
+<z-layout class="min-h-[600px] border rounded-md overflow-hidden">
+  <z-header>
+    <div class="flex items-center justify-between w-full">
+      <div class="font-semibold text-lg flex items-center">
+        <img src="/logo.png" alt="Logo" width="24" height="24" />
+        <span class="ml-2">Company</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button z-button zType="ghost" zSize="sm">
+          <z-icon zType="search" />
+        </button>
+        <button z-button zType="ghost" zSize="sm">
+          <z-icon zType="bell" />
+        </button>
+      </div>
+    </div>
+  </z-header>
 
+  <z-layout>
+    <z-sidebar [zWidth]="200" class="!p-0">
+      <nav class="flex flex-col h-full gap-2 p-4">
+        <app-categories-side-bar 
+          [categories]="categories"
+          (selectedCategory)="onSelectedCategory($event)">
+        </app-categories-side-bar>
+      </nav>
+    </z-sidebar>
 
-  <z-layout class="rounded-lg overflow-hidden">
-    <!-- <z-header class="h-16 px-12 bg-[#4096ff] text-white border-0 justify-center">Header</z-header> -->
     <z-layout>
-      <z-sidebar class=" text-white border-0" [zWidth]="120">Sidebar
+      <z-content class="min-h-[200px]">
+        <div class="space-y-4">
+          <!-- <z-skeleton class="h-32 w-full"></z-skeleton> -->
+           <div class="flex items-center gap-2">
+            <input z-input [formControl]="searchControl" placeholder="Search product by name" />
+            <button z-button zType="secondary" (click)="onClearSearch()">Clear Search</button>
+          </div>
 
+          <z-breadcrumb *ngIf="selectedCategory" class="mb-4">
+            <z-breadcrumb-list zWrap="wrap" zAlign="start">
+              <z-breadcrumb-item>
+                <z-breadcrumb-page>Cagegory: {{selectedCategory?.name}} </z-breadcrumb-page>
+              </z-breadcrumb-item>
+            </z-breadcrumb-list>
+          </z-breadcrumb>
 
-        
+          <div class="flex flex-wrap gap-4">
+            <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+          </div>
 
-
-      </z-sidebar>
-      <z-content class="min-h-[200px]  text-white">
-        <div class="flex flex-wrap gap-4">
-          <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
         </div>
-
-        <z-pagination [zPageIndex]="currentPage" [zTotal]="5" [(ngModel)]="currentPage" /> 
-
-
       </z-content>
+
+      <z-footer>
+        <div class="flex items-center justify-center w-full text-sm text-muted-foreground">© 2025</div>
+      </z-footer>
     </z-layout>
-    <!-- <z-footer class="h-16 px-12 bg-[#4096ff] text-white border-0 justify-center">Footer</z-footer> -->
   </z-layout>
-
-
-
-
-</div>
-
-<p>products works!</p>
- 
+</z-layout>

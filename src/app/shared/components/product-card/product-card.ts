@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { IProduct } from '@shared/models/product';
+import { Product } from '@shared/models/product';
 import { ZardButtonComponent } from '../button/button.component';
 import { ZardCardComponent } from '../card/card.component';
 import { CommonModule } from '@angular/common';
@@ -11,5 +11,5 @@ import { ZardAvatarComponent } from '../avatar/avatar.component';
   templateUrl: './product-card.html',
 })
 export class ProductCard {
-  readonly product = input<IProduct>();
+  readonly product = input<Product>();
 }

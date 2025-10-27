@@ -1,0 +1,10 @@
+<z-sidebar-group>
+    <z-sidebar-group-label>Categories</z-sidebar-group-label>
+    <button *ngFor="let category of categories()" 
+    z-button 
+    class="justify-start" 
+    [zType]="activeCategory?.name === category?.name ? 'default' : 'secondary'"
+    (click)="onCategoryClick(category)">
+        {{ category?.name }}
+    </button>
+</z-sidebar-group>
