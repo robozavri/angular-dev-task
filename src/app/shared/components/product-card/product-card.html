@@ -1,16 +1,34 @@
-<z-card class="w-full max-w-sm" [zTitle]="product()?.name">
+<z-card class="w-full max-w-sm" [zTitle]="product().name"> 
       <div class="space-y-4"> 
+    
         <div class="space-y-2">
           <div class="flex items-center">
-            <z-avatar zSize="lg" [zImage]="{ url: product()?.imageUrl, alt: product()?.name, fallback: '' }" />
+            <z-avatar zSize="lg" [zImage]="{ url: product().imageUrl, alt: product().name, fallback: '' }" />
           </div>
          
         </div>
         <div class="space-y-2">
-          <span class="text-lg font-bold">Price: ${{ product()?.price }}</span>
+          <span class="text-lg font-bold ">Price: ${{ product().price }}</span>
         </div>
+     
         <div class="space-y-2">
-          <z-button zType="outline" class="w-full">View details</z-button>
+          <z-button 
+          class="w-full"
+          zType="outline" (click)="onAddFavorite(product())"> 
+            <z-icon zType="heart" zSize="sm" 
+            [class]="(product().isFavorite) ? 'text-destructive' : 'text-gray-500'" />
+            Add to favorites
+          </z-button>
         </div>
+
+        <div class="space-y-2">
+          <z-button 
+          zType="outline"
+          class="w-full"
+          routerLink="/product/{{ product().id }}">
+          View details
+        </z-button>
+        </div>
+
       </div>
     </z-card>

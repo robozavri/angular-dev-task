@@ -1,16 +1,15 @@
 <z-layout class="min-h-[600px] border rounded-md overflow-hidden">
   <z-header>
     <div class="flex items-center justify-between w-full">
-      <div class="font-semibold text-lg flex items-center">
+      <div class="font-semibold text-lg flex items-center cursor-pointer"
+      routerLink="/"
+      >
         <img src="/logo.png" alt="Logo" width="24" height="24" />
         <span class="ml-2">Company</span>
       </div>
       <div class="flex items-center gap-2">
-        <button z-button zType="ghost" zSize="sm">
-          <z-icon zType="search" />
-        </button>
-        <button z-button zType="ghost" zSize="sm">
-          <z-icon zType="bell" />
+        <button z-button zType="ghost" zSize="sm" routerLink="/favorites">
+          <z-icon zType="heart" />
         </button>
       </div>
     </div>
@@ -29,7 +28,6 @@
     <z-layout>
       <z-content class="min-h-[200px]">
         <div class="space-y-4">
-          <!-- <z-skeleton class="h-32 w-full"></z-skeleton> -->
            <div class="flex items-center gap-2">
             <input z-input [formControl]="searchControl" placeholder="Search product by name" />
             <button z-button zType="secondary" (click)="onClearSearch()">Clear Search</button>
@@ -38,13 +36,17 @@
           <z-breadcrumb *ngIf="selectedCategory" class="mb-4">
             <z-breadcrumb-list zWrap="wrap" zAlign="start">
               <z-breadcrumb-item>
-                <z-breadcrumb-page>Cagegory: {{selectedCategory?.name}} </z-breadcrumb-page>
+                <z-breadcrumb-page>Cagegory: {{selectedCategory.name}} </z-breadcrumb-page>
               </z-breadcrumb-item>
             </z-breadcrumb-list>
           </z-breadcrumb>
 
           <div class="flex flex-wrap gap-4">
-            <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+              <app-product-card 
+                *ngFor="let product of products" 
+                [product]="product" 
+                (addFavorite)="onAddFavorite(product)">
+              </app-product-card>
           </div>
 
         </div>

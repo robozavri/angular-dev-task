@@ -1,0 +1,84 @@
+<z-layout class="min-h-[600px] border rounded-md overflow-hidden">
+  <z-header>
+    <div class="flex items-center justify-between w-full">
+      <div
+        class="font-semibold text-lg flex items-center cursor-pointer"
+        routerLink="/"
+      >
+        <img src="/logo.png" alt="Logo" width="24" height="24" />
+        <span class="ml-2">Company</span>
+      </div>
+    
+      <button z-button zType="ghost" zSize="sm" routerLink="/favorites">
+        <z-icon zType="heart" />
+      </button>
+    </div>
+  </z-header>
+
+  <z-content class="p-6">
+
+    <h2 class="text-2xl font-bold mb-4 text-center">Product Details</h2>
+
+    <z-breadcrumb class="mb-4">
+      <z-breadcrumb-list zWrap="wrap" zAlign="start">
+        <z-breadcrumb-item>
+          <z-breadcrumb-page routerLink="/" class="cursor-pointer">
+            <z-icon zType="chevron-left" /> Back to list
+          </z-breadcrumb-page>
+        </z-breadcrumb-item>
+        <z-breadcrumb-separator />
+        <z-breadcrumb-item>
+          <z-breadcrumb-page>Product Details</z-breadcrumb-page>
+        </z-breadcrumb-item>
+      </z-breadcrumb-list>
+    </z-breadcrumb>
+
+    <div *ngIf="!product" class="min-h-[300px] flex items-center justify-center">
+      <z-empty zSize="lg" zDescription="No product details found." />
+    </div>
+    <div
+      *ngIf="product"
+      class="flex flex-col items-center justify-center gap-8 py-8"
+    >
+      <z-card class="max-w-lg w-full">
+        <div class="flex flex-col md:flex-row gap-8 p-6">
+          <div class="flex-shrink-0 flex items-center justify-center">
+            <z-avatar
+              zSize="lg"
+              [zImage]="{ url: product.imageUrl, alt: product.name, fallback: '' }"
+              class="border"
+            />
+          </div>
+          <div class="flex-1 space-y-4">
+            <div>
+              <h2 class="text-2xl font-bold mb-2">{{ product.name }}</h2>
+              <div class="text-muted-foreground mb-1">
+                Category: <span class="font-semibold">{{ product.category }}</span>
+              </div>
+              <div class="text-lg font-semibold mt-2">Price: ${{ product.price }}</div>
+            </div>
+            <div>
+              <div class="font-semibold mb-1">Description</div>
+              <div class="text-muted-foreground">{{ product.description }}</div>
+            </div>
+            <div class="mt-4 flex gap-2">
+          
+                <z-button 
+                class="w-full"
+                zType="outline" (click)="onAddFavorite(product)"> 
+                  <z-icon zType="heart" zSize="sm" 
+                  [class]="(product.isFavorite || false) ? 'text-destructive' : 'text-gray-500'" />
+                  Add to favorites
+                </z-button>
+            </div>
+          </div>
+        </div>
+      </z-card>
+    </div>
+  </z-content>
+  <z-footer>
+    <div class="flex items-center justify-center w-full text-sm text-muted-foreground">
+      © 2025
+    </div>
+  </z-footer>
+</z-layout>

@@ -1,17 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ZardPaginationModule } from '../../shared/components/pagination/pagination.module';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ContentComponent } from '../../shared/components/layout/content.component';
-import { LayoutComponent } from '../../shared/components/layout/layout.component';
 import { ProductCard } from '../../shared/components/product-card/product-card';
-import { CommonModule } from '@angular/common';
-import { FooterComponent } from '../../shared/components/layout/footer.component';
 import { SidebarComponent } from '../../shared/components/layout/sidebar.component';
-import { SidebarGroupComponent, SidebarGroupLabelComponent } from '../../shared/components/layout/sidebar.component';
-import { ZardSkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
-import { ZardButtonComponent } from '../../shared/components/button/button.component';
-import { ZardIconComponent } from '../../shared/components/icon/icon.component';
-import { HeaderComponent } from '../../shared/components/layout/header.component';
 import { Category } from '@shared/models/category';
 import { CategoriesSideBar } from '@shared/components/categories-side-bar/categories-side-bar';
 import { categories } from 'src/app/mock-data/categories';
@@ -19,7 +10,9 @@ import { ZardInputDirective } from '../../shared/components/input/input.directiv
 import { ProductService } from '../../shared/services/product.service';
 import { Product } from '@shared/models/product';
 import { debounceTime, switchMap } from 'rxjs';
-import { ZardBreadcrumbModule } from '@shared/components/breadcrumb/breadcrumb.module';
+import { FavoritesService } from '@shared/services/favorites.service';
+import { toast } from 'ngx-sonner';
+import { SharedModule } from '@shared/shared.module';
 
 @Component({
   selector: 'app-products',
@@ -27,25 +20,14 @@ import { ZardBreadcrumbModule } from '@shared/components/breadcrumb/breadcrumb.m
     ProductCard,
     ZardPaginationModule,
     FormsModule,
-    ContentComponent,
-    LayoutComponent,
-    CommonModule,
     SidebarComponent,
-    SidebarGroupComponent,
-    SidebarGroupLabelComponent,
-    ZardSkeletonComponent,
-    ZardButtonComponent,
-    ZardIconComponent,
-    HeaderComponent,
-    FooterComponent,
     CategoriesSideBar,
     ZardInputDirective,
     ReactiveFormsModule,
-    ZardBreadcrumbModule,
+    SharedModule,
   ],
-  providers: [ProductService],
+  providers: [ProductService, FavoritesService],
   templateUrl: './products.html',
-  styleUrl: './products.css',
 })
 export class Products implements OnInit {
 
@@ -55,7 +37,8 @@ export class Products implements OnInit {
   searchControl = new FormControl();
   
   constructor(
-    private productService: ProductService
+    private productService: ProductService,
+    private favoritesService: FavoritesService,
   ) {}
 
   ngOnInit(): void {
@@ -106,5 +89,12 @@ export class Products implements OnInit {
     this.searchControl.reset();
     this.selectedCategory = null;
     this.loadProducts();
+  }
+
+  onAddFavorite(product: Product): void {
+    this.favoritesService.addFavorite(product);
+    toast('Product added to favorites', {
+      description: product.name,
+    });
   }
 }

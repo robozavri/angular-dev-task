@@ -1,0 +1,52 @@
+<z-layout class="min-h-[600px] border rounded-md overflow-hidden">
+    <z-header>
+      <div class="flex items-center justify-between w-full">
+        <div class="font-semibold text-lg flex items-center cursor-pointer"
+        routerLink="/"
+        >
+          <img src="/logo.png" alt="Logo" width="24" height="24" />
+          <span class="ml-2">Company</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="font-semibold text-xl">Favorites</span>
+        </div>
+      </div>
+    </z-header>
+
+    <z-content class="p-6">   
+      <z-breadcrumb-item>
+          <z-breadcrumb-page routerLink="/" class="cursor-pointer">
+            <z-icon zType="chevron-left" /> Back to list
+          </z-breadcrumb-page>
+      </z-breadcrumb-item> 
+
+    <h2 class="text-2xl font-bold mb-4 text-center">Your Favorite Products</h2>
+   
+      <z-breadcrumb class="mb-4">
+        <z-breadcrumb-list zWrap="wrap" zAlign="start">  
+          <z-breadcrumb-item>
+            <z-breadcrumb-page>Home</z-breadcrumb-page>
+          </z-breadcrumb-item> 
+        <z-breadcrumb-separator />
+          <z-breadcrumb-item>
+            <z-breadcrumb-page>Favorites</z-breadcrumb-page>
+          </z-breadcrumb-item>
+        </z-breadcrumb-list>
+      </z-breadcrumb>
+
+      <div *ngIf="favorites.length === 0" class="text-muted-foreground flex items-center justify-center min-h-[400px]">
+        <z-empty *ngIf="favorites.length === 0" zSize="lg" zDescription="No favorite products found">
+        </z-empty> 
+      </div>
+      <div class="flex flex-wrap gap-4">
+        <app-product-card
+          *ngFor="let product of favorites"
+          [product]="product"
+          (addFavorite)="removeFavorite(product)">
+        </app-product-card>
+      </div>
+    </z-content>
+    <z-footer>
+      <div class="flex items-center justify-center w-full text-sm text-muted-foreground">© 2025</div>
+    </z-footer>
+  </z-layout>

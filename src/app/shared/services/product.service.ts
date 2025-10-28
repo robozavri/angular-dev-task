@@ -11,24 +11,29 @@ export class ProductService {
     return of(products);
   }
 
-  /**
-   * Get products by category
-   * @param category - The category to get products for
-   * @returns An observable of products that match the category
-   */
+  getProductsByIds(ids: Product['id'][]): Observable<Product[]> {
+    return of(products.filter(product => ids.includes(product.id)));
+  }
+
+  getProductById(id: Product['id']): Observable<Product | undefined> {
+    return of(products.find(product => product.id === Number(id)));
+  }
+
   filterByCategory(category: Category): Observable<Product[]> {
     const filtered = products.filter(product => product.category === category.name);
     return of(filtered);
   }
 
-  /**
-   * Search for products by name
-   * @param productName - The name of the product to search for
-   * @returns An observable of products that match the search criteria
-   */
   searchByName(productName: string): Observable<Product[]>{
+    const text = productName.toLowerCase().trim();
     const filtered = products.filter(product => 
-      product.name.toLowerCase().trim().includes(productName.toLowerCase().trim())
+      product.name.toLowerCase().trim().includes(text) 
+      ||
+      product.price.toString().toLowerCase().trim().includes(text)
+      ||
+      product.category.toLowerCase().trim().includes(text)
+      ||
+      product.description.toLowerCase().trim().includes(text)
     );
     return of(filtered);
   }
