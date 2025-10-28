@@ -1,6 +1,15 @@
 <z-layout class="min-h-[600px] border rounded-md overflow-hidden">
   <z-header>
     <div class="flex items-center justify-between w-full">
+      <button 
+      z-button 
+      zType="ghost" 
+      zSize="sm" 
+      class="lg:hidden"
+      (click)="toggleMobileSidebar()">
+      <z-icon zType="text-align-center" />
+    </button>
+
       <div class="font-semibold text-lg flex items-center cursor-pointer"
       routerLink="/"
       >
@@ -16,7 +25,7 @@
   </z-header>
 
   <z-layout>
-    <z-sidebar [zWidth]="200" class="!p-0">
+    <z-sidebar [zWidth]="200" class="!p-0 hidden lg:block">
       <nav class="flex flex-col h-full gap-2 p-4">
         <app-categories-side-bar 
           [categories]="categories"
@@ -24,6 +33,28 @@
         </app-categories-side-bar>
       </nav>
     </z-sidebar>
+
+      <!-- Mobile Sidebar - overlay სახით -->
+      <div 
+      *ngIf="isMobileSidebarOpen"
+      class="fixed inset-0 z-50 lg:hidden"
+      (click)="closeMobileSidebar()">
+      <!-- Backdrop -->
+      <div class="absolute inset-0 bg-black/50"></div>
+      
+      <!-- Sidebar Content -->
+      <div 
+        class="absolute left-0 top-0 h-full w-64 bg-white shadow-lg p-4"
+        (click)="$event.stopPropagation()">
+        <nav class="flex flex-col h-full gap-2">
+          <app-categories-side-bar 
+            [categories]="categories"
+            (selectedCategory)="onSelectedCategory($event); closeMobileSidebar()">
+          </app-categories-side-bar>
+        </nav>
+      </div>
+    </div>
+
 
     <z-layout>
       <z-content class="min-h-[200px]">
@@ -41,7 +72,7 @@
             </z-breadcrumb-list>
           </z-breadcrumb>
 
-          <div class="flex flex-wrap gap-4">
+          <div class="flex flex-wrap gap-2">
               <app-product-card 
                 *ngFor="let product of products" 
                 [product]="product" 

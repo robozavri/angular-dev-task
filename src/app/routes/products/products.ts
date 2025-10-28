@@ -31,6 +31,16 @@ import { SharedModule } from '@shared/shared.module';
 })
 export class Products implements OnInit {
 
+  isMobileSidebarOpen = false;
+
+  toggleMobileSidebar(): void {
+    this.isMobileSidebarOpen = !this.isMobileSidebarOpen;
+  }
+
+  closeMobileSidebar(): void {
+    this.isMobileSidebarOpen = false;
+  }
+  
   selectedCategory: Category | null = null;
   products: Product[] = [];
   readonly categories: Category[] = categories;
